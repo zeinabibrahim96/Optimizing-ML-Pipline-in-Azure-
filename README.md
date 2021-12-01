@@ -23,7 +23,7 @@ slack_factor: The amount of slack allowed with respect to the best performing tr
 
 Any run that doesn't fall within the slack factor or slack amount of the evaluation metric with respect to the best performing run will be terminated. This means that with this policy, the best performing runs will execute until they finish and this is the reason I chose it.
 # AutoML
-The best performing model was a VotingEnsembl with one of its metaleaners as a logistic regression model with a max iteration value of 200 and C of 100. The metalearner used cross-validation version. AutoML also produced useful classification metrics that we didn't define and has a feature to explain the best model.
+The best performing model was a VotingEnsemble with one of its metaleaners as a logistic regression model with a max iteration value of 200 and C of 100. The metalearner used cross-validation version. AutoML also produced useful classification metrics that we didn't define and has a feature to explain the best model.
 # Pipeline comparison
 The best model was a VotingEnsemble Model with an accuracy of 0.9159 that was obtained using AutoML vs Hyperdrive's logistic regression of max iterations 200 and C of 100 that had an accuracy of 0.9176. Since ensembling using many models to make a decision, as compared to Hyperdrive's one logistic regression, it was able to achieve a higher score.
 # Future Improvement
