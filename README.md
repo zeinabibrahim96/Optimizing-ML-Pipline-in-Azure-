@@ -4,6 +4,38 @@ i had  the opportunity to create and optimize an ML pipeline, with  provided a c
 ![Diagram](https://user-images.githubusercontent.com/59172649/143721229-830f94d2-e4b1-473d-95a9-2c086826db9f.JPG)
 # Scikit-learn Pipeline
 Explain the pipeline architecture, including data, hyperparameter tuning, and classification algorithm.
+# Scikit-learn
+
+A Logistic Regression model was first created and trained using Scikit-learn in the train.py. The steps taken in the python script were as follows:
+
+    Import the banking dataset using Azure TabularDataset Factory
+
+    Data is then cleaned and transformed using a cleaning function
+
+    Processed data is then split into a training and testing set
+
+    Scikit-learn was used to train an initial Logistic Regression model while specifying the value of two hyper parameters, C and max_iter. C represents the inverse of the regularization strength, while max_iter represents the maximum number of iterations taken for the model to converge. These two parameters were initially passed in the python script so they can be optimised later using Hyperdrive.
+    Once the data has been prepared it is split into a training and test set. A test set size of 22% of total entries was selected as a compromise between ensuring adequate representation in the test data and providing sufficient data for model training.
+
+The classification method used here is logistic regression. Logistic regression uses a fitted logistic function and a threshold. The parameters available within the training script are C (which indicates the regularization strength i.e. preference for sparser models) and maximum number of iterations.
+
+The trained model is then saved
+# Hyper Drive
+
+The initial model trained is then optimised using Hyperdrive. Hyperdrive is a method of implementing automatic hyperparameter tuning. Hyperparameter tuning is typically computationally expensive and manual, therefore, by using Hyperdrive we can automate this process and run experiments in parallel to efficiently optimize hyperparameters.
+
+# The steps taken to implement Hyperdrive were as follows:
+
+    Configuration of the Azure cloud resources
+
+    Configuring the Hyperdrive
+
+    Running the Hyperdrive
+
+    Retrieving the model with the parameters that gave the best model
+
+Elaborating more on the second step in configuring the Hyperdrive, there are two extremely beneficial parameters that are included in the configuration; RandomParameterSampling and BanditPolicy.
+
 
 # Parameter sampler
 
@@ -42,6 +74,7 @@ I chose accuracy as the primary metric.
 n_cross_validations=2
 
 This parameter sets how many cross validations to perform, based on the same number of folds (number of subsets). As one cross-validation could result in overfit, in my code I chose 2 folds for cross-validation; thus the metrics are calculated with the average of the 2 validation metrics.
+The Voting Ensemble model selected used a slight amount of l1 regularization, meaning that some penalty was placed the number of non-zero model coefficients. Additionally, the voting method was soft voting (as compared to hard), where all models' class probabilities are averaged and the highest probablility selected to make a prediction. Although the learning rate scheduling for gradient descent is specified as 'invscaling' (i.e. inverse scaling), the scaling factor power is 0 indicating that the learning rate is constant in this case.
 
 The best performing model was a VotingEnsemble with one of its metaleaners as a logistic regression model with a max iteration value of 200 and C of 100. The metalearner used cross-validation version. AutoML also produced useful classification metrics that we didn't define and has a feature to explain the best model.
 # Pipeline comparison
