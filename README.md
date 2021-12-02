@@ -25,16 +25,8 @@ Any run that doesn't fall within the slack factor or slack amount of the evaluat
 # AutoML
 i defined the following configuration for the AutoML Run :
 
-automl_config = AutoMLConfig(
-    compute_target = compute_target,
-    experiment_timeout_minutes=15,
-    task='classification',
-    primary_metric='accuracy',
-    training_data=ds,
-    label_column_name='y',
-    iteration_timeout_minutes=5,
-    n_cross_validations=2)
-    
+![image](https://user-images.githubusercontent.com/59172649/144405310-535c8f58-150f-4c30-8d94-884083a941d9.png)
+
 experiment_timeout_minutes=15
 
 This is an exit criterion and is used to define how long, in minutes, the experiment should continue to run. To help avoid experiment time out failures, I used the minimum of 15 minutes.
@@ -53,6 +45,7 @@ This parameter sets how many cross validations to perform, based on the same num
 
 The best performing model was a VotingEnsemble with one of its metaleaners as a logistic regression model with a max iteration value of 200 and C of 100. The metalearner used cross-validation version. AutoML also produced useful classification metrics that we didn't define and has a feature to explain the best model.
 # Pipeline comparison
+The difference in accuracy between the two models is not so big although the HyperDrive model performed better in terms of accuracy.If we were given more time to run the AutoML, the resulting model would certainly be much more better. And the best thing is that AutoML would make all the necessary calculations, trainings, validations, etc. without the need for us to do anything. 
 The best model was a VotingEnsemble Model with an accuracy of 0.9159 that was obtained using AutoML vs Hyperdrive's logistic regression of max iterations 200 and C of 100 that had an accuracy of 0.9176. Since ensembling using many models to make a decision, as compared to Hyperdrive's one logistic regression, it was able to achieve a higher score.
 # Future Improvement
 Advanced Feature engineering. deleting and creating new features and using other methods such as target encoding could help improve the results. The resulting feature set will be able to map well to the target variable resulting into better models.
